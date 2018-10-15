@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "music.js",
   "scripts": {
-    "dev": "nodemon music.js",
-    "test": "jest music.spec.js --detectOpenHandles"
+    "dev": "nodemon music",
+    "test": "jest music.spec.js",
+    "start": "./music"
   },
   "keywords": [],
   "author": "",

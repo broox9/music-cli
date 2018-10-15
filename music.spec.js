@@ -1,33 +1,33 @@
-const { handlers, parseLine } = require('./music')
+const { parseLine, start } = require('./music')
 
-jest.mock('console', () => ({
-  log: jest.fn()
-}))
-
-jest.mock('./helpers', () => ({
-  logSystem: jest.fn(),
-  logWarn: jest.fn(),
-  logInfo: jest.fn(),
-  tokenizer: jest.fn()
-    .mockReturnValue({ command: 'show', qualifier: 'all', details: '"Guy"' })
+jest.mock('./handlers', () => ({
+  handleQuit: jest.fn(),
+  handleAdd: jest.fn(),
+  handlePlay: jest.fn(),
+  handleShow: jest.fn()
 }))
 
 jest.genMockFromModule('./helpers')
+const { handleShow } = require('./handlers')
 
+describe('music-cli', () => {
 
-describe('handler functions', () => {
-  test('parseLine', () => {
-    expect(parseLine.constructor).toBeDefined()
-    expect(handlers.handleShow).toBeDefined()
-    expect(handlers.handleAdd)
+  describe('handler functions', () => {
+    test('parseLine', () => {
+      expect(parseLine.constructor).toBeDefined()
+    })
+  })
+
+  describe('handlers', () => {
+    test('handleShow', () => {
+      parseLine('show all "Teddy Riley"')
+      expect(handleShow).toHaveBeenCalled()
+      expect(handleShow).toHaveBeenCalledWith(
+        'show', 'all', ['"Teddy Riley"']
+      )
+    })
   })
 })
 
-describe('handlers', () => {
-  let showSpy = jest.spyOn(handlers, 'handleShow')
-
-  test('handleShow', () => {
-    parseLine('show all "Teddy Riley"')
-    expect(showSpy).toHaveBeenCalled()
-  })
-})
+/** @TODO: finish the tests */
+/** @TODO: fix the node process issue when running tests */
